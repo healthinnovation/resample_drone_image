@@ -1,0 +1,6 @@
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+*?.tif
+data/*
