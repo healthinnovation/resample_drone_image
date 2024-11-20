@@ -3,5 +3,6 @@
 .RData
 .Ruserdata
 *?.tif
-data/*
 .Rproj.user
+data/**/*.gpkg
+data/**/*.tif
