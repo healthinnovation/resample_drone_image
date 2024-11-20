@@ -3,11 +3,11 @@ library(terra)
 library(ggplot2)
 library(patchwork)
 
-month <- "may"
+month <- "august"
 
 list_rgb <- list.files(
   path = "data/",
-  pattern = "rgb_may.*\\.tif",
+  pattern = "rgb_august.*\\.tif",
   full.names = TRUE)
 
 layers <- list(
@@ -32,4 +32,6 @@ combined_plot <- wrap_plots(plots)
 ggsave(
   filename = paste0('outputs/rgb_plot_',month,'.png'),
   plot = last_plot(),
+  height = 10,
+  width = 8,
   dpi = 300)
