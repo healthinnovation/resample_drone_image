@@ -3,9 +3,11 @@ library(terra)
 library(ggplot2)
 library(patchwork)
 
+month <- "may"
+
 list_rgb <- list.files(
   path = "data/",
-  pattern = "rgb_.*\\.tif",
+  pattern = "rgb_may.*\\.tif",
   full.names = TRUE)
 
 layers <- list(
@@ -16,17 +18,18 @@ layers <- list(
   )
 
 my_plot <- function(x, title = NULL){
-  names <- gsub(".*rgb_([0-9.]+m)\\.tif$", "\\1",sources(x))
+  names <- gsub(".*_([0-9.]+m)\\.tif$", "\\1", sources(x))
   plt_rgb <- ggplot() + 
     geom_spatraster_rgb(data = x) + 
     theme_minimal(9) + 
-    labs(title = sprintf("Spatial resolution: %s",names))
+    labs(title = sprintf("Spatial resolution: %s",names),
+         subtitle = paste0('2023-',month))
   return(plt_rgb)
 }
 
 plots <- lapply(X = layers,FUN = my_plot)
 combined_plot <- wrap_plots(plots)
 ggsave(
-  filename = 'rgb_panel_plots.png',
+  filename = paste0('outputs/rgb_plot_',month,'.png'),
   plot = last_plot(),
   dpi = 300)

@@ -7,7 +7,8 @@ hexagon <- st_read(dsn = "data/flying_mission.gpkg") |>
   st_transform(crs = 32718)             
 
 # Load the original raster dataset
-village <- rast("data/Quistococha_D.tif") |> 
+month <- "august"
+village <- rast("data/Quistococha_D_agosto.tif") |> 
   crop(y = hexagon, mask = TRUE)        
 
 # Extract RGB bands from the raster
@@ -42,10 +43,10 @@ resampled_bands <- lapply(size, function(pixel_size) {
 for (i in seq_along(size)) {
   resolution <- size[i]
   rgb_layer <- c(
-    resampled_bands[[i]]$red, 
+    resampled_bands[[i]]$blue, 
     resampled_bands[[i]]$green, 
-    resampled_bands[[i]]$blue)
-  output_path <- paste0("data/rgb_", resolution, "m.tif")
+    resampled_bands[[i]]$red)
+  output_path <- paste0("data/rgb_", month ,'_',resolution, "m.tif")
   writeRaster(rgb_layer, filename = output_path, overwrite = TRUE)
   cat("Saved RGB:", output_path, "\n")
 }
